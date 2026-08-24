@@ -1,6 +1,6 @@
 ## Neo4j Lab
 
-A Neo4j transit network project (see `Docs.md` for the assignment) plus some
+A Neo4j transit network project (see `Assingment-Instructions.md` for the assignment) plus some
 extra Python tooling for visualizing and analyzing the graph.
 
 ### Step 1 — Install & run Neo4j

@@ -1,0 +1,14 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+!src/**/*.pyc
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Editable source for the compiled src/ package (see README)
+src_source/

@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>main.py Hints</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --border: #2a2f3a;
+    --text: #e6e9ef;
+    --muted: #8b93a3;
+    --accent: #5fb3f9;
+    --accent-dim: #2c5a7c;
+    --code-bg: #0b0d11;
+    --done: #4caf7d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 2.5rem 1.25rem 5rem;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; margin: 0 0 0.4rem; }
+  .sub {
+    color: var(--muted);
+    margin: 0 0 2rem;
+    font-size: 0.95rem;
+  }
+  .sub code { color: var(--accent); }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .card summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-weight: 600;
+  }
+  .card summary::-webkit-details-marker { display: none; }
+  .card summary::before {
+    content: "▸";
+    color: var(--muted);
+    transition: transform 0.15s ease;
+    flex-shrink: 0;
+  }
+  .card[open] summary::before { transform: rotate(90deg); }
+  .fn {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    color: var(--accent);
+    font-size: 0.95rem;
+  }
+  .part {
+    color: var(--muted);
+    font-weight: 400;
+    font-size: 0.82rem;
+  }
+  .body { margin-top: 0.9rem; }
+  .desc {
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin: 0 0 0.9rem;
+  }
+  .hints { list-style: none; margin: 0 0 0.9rem; padding: 0; }
+  .hints li {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent-dim);
+    border-radius: 6px;
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+  .hints li b {
+    color: var(--accent);
+    font-size: 0.75rem;
+    display: block;
+    margin-bottom: 0.2rem;
+    letter-spacing: 0.03em;
+  }
+  .row { display: flex; align-items: center; gap: 0.8rem; }
+  button.reveal {
+    background: var(--accent-dim);
+    color: var(--text);
+    border: none;
+    border-radius: 6px;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  button.reveal:hover:not(:disabled) { background: var(--accent); color: #0b0d11; }
+  button.reveal:disabled { background: transparent; color: var(--muted); border: 1px dashed var(--border); cursor: default; }
+  .count { color: var(--muted); font-size: 0.8rem; }
+  .floor {
+    margin-top: 4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+  .ref-card { margin-bottom: 2rem; }
+  .ref-card summary { font-size: 1.05rem; }
+  .ref-grid {
+    display: grid;
+    gap: 0.7rem;
+    margin-top: 0.9rem;
+  }
+  .ref-item {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    gap: 0.2rem 1rem;
+    align-items: start;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-term {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding-top: 0.1rem;
+  }
+  .ref-body { min-width: 0; }
+  .ref-desc {
+    font-size: 0.88rem;
+    margin: 0 0 0.35rem;
+  }
+  .ref-ex {
+    display: block;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    overflow-x: auto;
+    white-space: pre;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1> Neo4J Group Lab Hints</h1>
+  <p class="sub">
+    One panel per TODO in <code>main.py</code>. Click <b>Get a hint</b> to reveal them one at a time —
+    they start vague and get more specific, but even the last one stops short of a paste-in answer.
+    Try for real first; open <code>main_template.py</code> only after your group has a genuine attempt down.
+  </p>
+
+  <details class="card ref-card" open>
+    <summary>📖 Cypher Quick Reference</summary>
+    <div class="ref-grid">
+      <div class="ref-item">
+        <div class="ref-term">MATCH</div>
+        <div class="ref-body">
+          <p class="ref-desc">Finds a pattern of nodes/relationships that already exist in the graph. The core "read" clause — almost every query starts with one.</p>
+          <code class="ref-ex">MATCH (n:Label) RETURN n</code>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-term">CREATE</div>
+        <div class="ref-body">
+          <p class="ref-desc">Always creates a brand-new node or relationship, even if an identical one already exists. Fine for a one-time script, risky for anything you might re-run.</p>
+          <code class="ref-ex">CREATE (n:Label {name: "x"})</code>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-term">MERGE</div>
+        <div class="ref-body">
+          <p class="ref-desc">Matches a pattern if it exists, otherwise creates it. Idempotent — re-running a script full of MERGEs won't produce duplicates, which is why <code>build_graph()</code> should use it.</p>
+          <code class="ref-ex">MERGE (n:Label {name: $name})</code>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-term">Relationships</div>
+        <div class="ref-body">
+          <p class="ref-desc">Written between two node patterns with an arrow showing direction. A type after <code>*min..max</code> matches a variable-length chain of hops instead of exactly one.</p>
+          <code class="ref-ex">(a)-[:TYPE]-&gt;(b)
+(a)-[:TYPE*1..5]-&gt;(b)   // 1 to 5 hops, any path</code>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-term">WHERE</div>
+        <div class="ref-body">
+          <p class="ref-desc">Filters rows already matched, using any boolean condition on their properties.</p>
+          <code class="ref-ex">WHERE n.property = $value</code>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-term">RETURN</div>
+        <div class="ref-body">
+          <p class="ref-desc">Chooses what a query outputs — whole nodes, individual properties, or computed expressions. Use <code>AS</code> to name a column.</p>
+          <code class="ref-ex">RETURN n.name AS name</code>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-term">WITH</div>
+        <div class="ref-body">
+          <p class="ref-desc">Pipes values from one part of a query into the next, like a checkpoint. Required whenever you aggregate something and then need to filter or sort on that aggregate.</p>
+          <code class="ref-ex">WITH n, count(m) AS total
+WHERE total &gt; 1</code>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-term">Aggregating</div>
+        <div class="ref-body">
+          <p class="ref-desc"><code>count()</code>, <code>count(DISTINCT x)</code>, <code>collect()</code>, etc. summarize grouped rows. Anything in RETURN/WITH that isn't wrapped in one of these is implicitly what the rows get grouped by.</p>
+          <code class="ref-ex">RETURN n.name, count(m) AS total</code>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-term">ORDER BY / LIMIT</div>
+        <div class="ref-body">
+          <p class="ref-desc">Sorts the result rows and, optionally, caps how many come back.</p>
+          <code class="ref-ex">ORDER BY total DESC LIMIT 5</code>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-term">Parameters</div>
+        <div class="ref-body">
+          <p class="ref-desc">A <code>$name</code> placeholder in the query text, filled in via a keyword argument to <code>.run()</code>. Always use these instead of f-string-ing values into Cypher — it avoids injection and lets Neo4j reuse the query plan.</p>
+          <code class="ref-ex">session.run("... WHERE n.name = $name", name=x)</code>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <div id="root"></div>
+
+  <p class="floor">Still stuck after the last hint? Compare your query shape against the examples in <code>Docs.md</code> Part 4/5, or ask your instructor.</p>
+</div>
+
+<script>
+(function(){
+  var Q=[
+    ["build_graph","Part 3","Create your Station/Line nodes and CONNECTS_TO/ON_LINE relationships.",
+     "VGhyZWUga2luZHMgb2Ygd3JpdGUgaGFwcGVuIGhlcmU6IExpbmUgbm9kZXMsIFN0YXRpb24gbm9kZXMsIGFuZCB0d28gcmVsYXRpb25zaGlwIHR5cGVzLiBVc2UgTUVSR0UgZXZlcnl3aGVyZSwgbmV2ZXIgQ1JFQVRFIOKAlCB0aGlzIGZ1bmN0aW9uIHJ1bnMgb24gZXZlcnkgZXhlY3V0aW9uLg==",
+     "TG9vcCBvdmVyIHlvdXIgb3duIGxpc3Qgb2YgbGluZSBuYW1lcyBhbmQgTUVSR0UgYSAoOkxpbmUge25hbWU6IC4uLn0pIGZvciBlYWNoLiBEbyB0aGUgc2FtZSBmb3IgeW91ciBsaXN0IG9mIHN0YXRpb24gbmFtZXMu",
+     "Rm9yIE9OX0xJTkU6IE1BVENIIHRoZSBzdGF0aW9uIGFuZCB0aGUgbGluZSBieSBuYW1lLCB0aGVuIE1FUkdFIChzdGF0aW9uKS1bOk9OX0xJTkVdLT4obGluZSkuIEEgdHJhbnNmZXIgc3RhdGlvbiBuZWVkcyB0aGlzIGRvbmUgb25jZSBwZXIgbGluZSBpdCdzIG9uLg==",
+     "Rm9yIENPTk5FQ1RTX1RPOiBNQVRDSCBib3RoIHN0YXRpb25zIGJ5IG5hbWUsIHRoZW4gTUVSR0UgKGEpLVs6Q09OTkVDVFNfVE8ge21pbnV0ZXM6JG19XS0+KGIpLCBwYXNzaW5nIG1pbnV0ZXMgYXMgYSBwYXJhbWV0ZXIuIFJ1biBpdCBhIHNlY29uZCB0aW1lIHdpdGggYS9iIHN3YXBwZWQgaWYgeW91IHdhbnQgdGhlIGNvbm5lY3Rpb24gdXNhYmxlIGluIGJvdGggZGlyZWN0aW9ucyDigJQgYnV0IHRoZSBzdGF0aW9uIGxpc3QsIGxpbmUgbGlzdCwgYW5kIHdobyBjb25uZWN0cyB0byB3aG9tIGFyZSBzdGlsbCB5b3VyIGdyb3VwJ3MgZGVzaWduIHRvIG1ha2Uu"],
+    ["show_all_stations","Query 1","Show all stations.",
+     "VGhlIHNpbXBsZXN0IG9mIHRoZSBmaXZlIOKAlCBvbmUgTUFUQ0gsIG5vIGZpbHRlciBhdCBhbGwu",
+     "UGF0dGVybjogTUFUQ0ggKHM6U3RhdGlvbikuIFRoaW5rIGFib3V0IHdoYXQgc2luZ2xlIHByb3BlcnR5IHlvdSBhY3R1YWxseSB3YW50IHRvIFJFVFVSTi4=",
+     "UkVUVVJOIHMubmFtZSBBUyBuYW1lLCB0aGVuIGxvb3Agb3ZlciB0aGUgcmVzdWx0IGFuZCBwcmludCByZWNvcmRbJ25hbWUnXSBmb3IgZWFjaCByb3cu",
+     "U2hhcGU6IE1BVENIIChzOlN0YXRpb24pIFJFVFVSTiBzLm5hbWUgQVMgbmFtZSDigJQgeW91IHN0aWxsIGhhdmUgdG8gd3JpdGUgdGhlIHNlc3Npb24ucnVuKC4uLikgY2FsbCBhbmQgdGhlIHByaW50IGxvb3AgeW91cnNlbGYu"],
+    ["stations_on_line","Query 2","Show stations on a particular line.",
+     "WW91J3JlIGZpbHRlcmluZyBzdGF0aW9ucyBieSB3aGljaCBMaW5lIHRoZXkncmUgb24g4oCUIHRoaW5rIGFib3V0IHdoaWNoIHJlbGF0aW9uc2hpcCBjb25uZWN0cyBhIFN0YXRpb24gdG8gYSBMaW5lLg==",
+     "UGF0dGVybjogKHM6U3RhdGlvbiktWzpPTl9MSU5FXS0+KGw6TGluZSksIHdpdGggYSBwcm9wZXJ0eSBmaWx0ZXIgb24gdGhlIGxpbmUncyBuYW1lLg==",
+     "RmlsdGVyIHdpdGgge25hbWU6ICRsaW5lfSBvbiB0aGUgTGluZSBub2RlLCBhbmQgcGFzcyBsaW5lPWxpbmVfbmFtZSBhcyBhIGtleXdvcmQgYXJndW1lbnQgdG8gLnJ1bigpIOKAlCBuZXZlciBmLXN0cmluZyBhIG5hbWUgaW50byB0aGUgcXVlcnkgdGV4dC4=",
+     "TUFUQ0ggKHM6U3RhdGlvbiktWzpPTl9MSU5FXS0+KGw6TGluZSB7bmFtZTogJGxpbmV9KSBSRVRVUk4gcy5uYW1lIEFTIG5hbWUg4oCUIHdpcmluZyB1cCB0aGUgcGFyYW1ldGVyIGFuZCB0aGUgcHJpbnQgbG9vcCBpcyBzdGlsbCBvbiB5b3Uu"],
+    ["stations_connected_to","Query 3","Find stations directly connected to a station.",
+     "U2FtZSBzaGFwZSBhcyB0aGUgcHJldmlvdXMgcXVlcnksIGJ1dCB0aGUgZmlsdGVyIGlzIG9uIGEgU3RhdGlvbiBpbnN0ZWFkIG9mIGEgTGluZS4=",
+     "UGF0dGVybjogKHM6U3RhdGlvbiB7bmFtZTogLi4ufSktWzpDT05ORUNUU19UT10tPihjb25uZWN0ZWQpIOKAlCBvbmUgTUFUQ0gsIG9uZSByZWxhdGlvbnNoaXAgaG9wLg==",
+     "Q09OTkVDVFNfVE8gaXMgZGlyZWN0aW9uYWwg4oCUIHRoaXMgb25seSBmaW5kcyBzdGF0aW9ucyByZWFjaGFibGUgRlJPTSB0aGUgZ2l2ZW4gc3RhdGlvbiwgbm90IHN0YXRpb25zIHRoYXQgY29ubmVjdCBJTlRPIGl0LiBJcyB0aGF0IHdoYXQgeW91IHdhbnQ/",
+     "TUFUQ0ggKHM6U3RhdGlvbiB7bmFtZTogJG5hbWV9KS1bOkNPTk5FQ1RTX1RPXS0+KGNvbm5lY3RlZCkgUkVUVVJOIGNvbm5lY3RlZC5uYW1lIEFTIG5hbWUg4oCUIHBhcmFtZXRlcml6ZSAkbmFtZSBhbmQgcHJpbnQgdGhlIHJvd3MgeW91cnNlbGYu"],
+    ["route_between","Query 4","Find a route between two stations (variable-length path).",
+     "VGhpcyBpcyB0aGUgb25lIHF1ZXJ5IHRoYXQgbmVlZHMgYSB2YXJpYWJsZS1sZW5ndGggcGF0dGVybiBpbnN0ZWFkIG9mIGEgc2luZ2xlIGhvcC4=",
+     "Q3lwaGVyIHN1cHBvcnRzICptaW4uLm1heCBvbiBhIHJlbGF0aW9uc2hpcCB0eXBlIHRvIG1hdGNoIGEgcGF0aCBvZiB0aGF0IGxlbmd0aC4gR2l2ZSB0aGUgcGF0aCBhIHZhcmlhYmxlIG5hbWUgKGUuZy4gcCA9IC4uLikgc28geW91IGNhbiByZXR1cm4gaXQu",
+     "TUFUQ0ggcCA9IChhOlN0YXRpb24ge25hbWU6JHN0YXJ0fSktWzpDT05ORUNUU19UTyoxLi4xMF0tPihiOlN0YXRpb24ge25hbWU6JGVuZH0pIFJFVFVSTiBwIOKAlCB0aGVuIHB1bGwgc3RhdGlvbiBuYW1lcyBvdXQgb2YgcCB1c2luZyBub2RlcyhwKS4=",
+     "Rm9yIGEgY2xlYW4gbGlzdCBpbnN0ZWFkIG9mIGEgcmF3IFBhdGggb2JqZWN0OiBSRVRVUk4gW24gSU4gbm9kZXMocCkgfCBuLm5hbWVdIEFTIHJvdXRlLiBBZGQgT1JERVIgQlkgbGVuZ3RoKHApIEFTQyBMSU1JVCAxIGlmIHlvdSB3YW50IHRoZSBzaW5nbGUgc2hvcnRlc3Qgcm91dGUg4oCUIGZvcm1hdHRpbmcgdGhlIHByaW50ZWQgb3V0cHV0IGlzIHN0aWxsIHlvdXIgY2FsbC4="],
+    ["most_connected_station","Query 5","Find the most connected station.",
+     "WW91J3JlIGNvdW50aW5nIHNvbWV0aGluZyBwZXIgc3RhdGlvbiDigJQgdGhpbmsgR1JPVVAgQlktc3R5bGUgYWdncmVnYXRpb24u",
+     "SW4gQ3lwaGVyLCBhbnl0aGluZyBpbiBSRVRVUk4gdGhhdCBpc24ndCB3cmFwcGVkIGluIGFuIGFnZ3JlZ2F0aW9uIGZ1bmN0aW9uIGlzIGltcGxpY2l0bHkgZ3JvdXBlZCBieS4=",
+     "TUFUQ0ggKHM6U3RhdGlvbiktWzpDT05ORUNUU19UT10tPihjb25uZWN0ZWQpIFJFVFVSTiBzLm5hbWUsIGNvdW50KGNvbm5lY3RlZCkgQVMgY29ubmVjdGlvbnMg4oCUIHRoZW4gc29ydC4=",
+     "QWRkIE9SREVSIEJZIGNvbm5lY3Rpb25zIERFU0MgKExJTUlUIDUgaWYgeW91IG9ubHkgd2FudCB0aGUgdG9wIGZldykuIENPTk5FQ1RTX1RPIGlzIGRpcmVjdGlvbmFsLCBzbyB0aGlzIGNvdW50cyBvbmx5IG91dGdvaW5nIGNvbm5lY3Rpb25zIOKAlCBkZWNpZGUgaWYgdGhhdCBtYXRjaGVzIHdoYXQgeW91ciBncm91cCBtZWFucyBieSAnbW9zdCBjb25uZWN0ZWQnLg=="],
+    ["transfer_points","Analysis 1","Which stations are transfer points?",
+     "QSB0cmFuc2ZlciBzdGF0aW9uIGlzIGRlZmluZWQgc3RydWN0dXJhbGx5LCBub3QgYnkgbmFtZSDigJQgdGhpbmsgYWJvdXQgd2hhdCBtYWtlcyBhIHN0YXRpb24ncyBPTl9MSU5FIHJlbGF0aW9uc2hpcHMgdW51c3VhbC4=",
+     "Q291bnQgaG93IG1hbnkgZGlzdGluY3QgTGluZXMgZWFjaCBzdGF0aW9uIGlzIE9OX0xJTkUgdG8sIHRoZW4ga2VlcCBvbmx5IHRoZSBvbmVzIHdoZXJlIHRoYXQgY291bnQgaXMgbW9yZSB0aGFuIG9uZS4=",
+     "TUFUQ0ggKHM6U3RhdGlvbiktWzpPTl9MSU5FXS0+KGw6TGluZSkgV0lUSCBzLCBjb3VudChESVNUSU5DVCBsKSBBUyBsaW5lX2NvdW50IOKAlCBXSVRIIGxldHMgeW91IGNhcnJ5IGFuIGFnZ3JlZ2F0ZWQgdmFsdWUgZm9yd2FyZCBpbnRvIGEgV0hFUkUgY2xhdXNlLg==",
+     "V0hFUkUgbGluZV9jb3VudCA+IDEgUkVUVVJOIHMubmFtZSBBUyBuYW1lLCBsaW5lX2NvdW50IOKAlCB0aGlzIHNob3VsZCByZXR1cm4gYXQgbGVhc3QgMiByb3dzIGlmIHlvdXIgZ3JhcGggc2F0aXNmaWVzIERvY3MubWQgUGFydCAxLiBQcmludCBmb3JtYXR0aW5nIGlzIHN0aWxsIHlvdXJzIHRvIGRlY2lkZS4="],
+    ["line_with_most_stations","Analysis 2","Which line has the most stations?",
+     "VGhlIG1pcnJvciBpbWFnZSBvZiB0aGUgbW9zdC1jb25uZWN0ZWQtc3RhdGlvbiBxdWVyeSwgYnV0IGNvdW50aW5nIHBlciBMaW5lIGluc3RlYWQgb2YgcGVyIFN0YXRpb24u",
+     "U2FtZSBPTl9MSU5FIHBhdHRlcm4gYXMgdHJhbnNmZXJfcG9pbnRzLCBidXQgYWdncmVnYXRlIGJ5IExpbmUgaW5zdGVhZCBvZiBieSBTdGF0aW9uLg==",
+     "TUFUQ0ggKHM6U3RhdGlvbiktWzpPTl9MSU5FXS0+KGw6TGluZSkgUkVUVVJOIGwubmFtZSBBUyBuYW1lLCBjb3VudChESVNUSU5DVCBzKSBBUyBzdGF0aW9uX2NvdW50Lg==",
+     "QWRkIE9SREVSIEJZIHN0YXRpb25fY291bnQgREVTQyDigJQgdGhlIHRvcCByb3cgaXMgeW91ciBhbnN3ZXIuIEtlZXAgRElTVElOQ1QgaW4gY2FzZSBhIHN0YXRpb24gY291bGQgb3RoZXJ3aXNlIG1hdGNoIHRoZSBwYXR0ZXJuIG1vcmUgdGhhbiBvbmNlLg=="]
+  ];
+  function d(s){return decodeURIComponent(escape(atob(s)));}
+  var r=document.getElementById("root");
+  Q.forEach(function(q){
+    var fn=q[0],part=q[1],desc=q[2],hs=q.slice(3);
+    var n=0;
+    var card=document.createElement("details");
+    card.className="card";
+    var sum=document.createElement("summary");
+    sum.innerHTML='<span class="fn">'+fn+'()</span><span class="part">— '+part+'</span>';
+    card.appendChild(sum);
+    var body=document.createElement("div");
+    body.className="body";
+    var p=document.createElement("p");
+    p.className="desc";
+    p.textContent=desc;
+    body.appendChild(p);
+    var ul=document.createElement("ul");
+    ul.className="hints";
+    body.appendChild(ul);
+    var row=document.createElement("div");
+    row.className="row";
+    var btn=document.createElement("button");
+    btn.className="reveal";
+    btn.textContent="Get a hint";
+    var cnt=document.createElement("span");
+    cnt.className="count";
+    function upd(){
+      cnt.textContent=n+" / "+hs.length+" hints shown";
+      if(n>=hs.length){btn.disabled=true;btn.textContent="No more hints";}
+    }
+    btn.addEventListener("click",function(){
+      if(n>=hs.length)return;
+      var li=document.createElement("li");
+      var b=document.createElement("b");
+      b.textContent="HINT "+(n+1);
+      var t=document.createElement("div");
+      t.textContent=d(hs[n]);
+      li.appendChild(b);li.appendChild(t);
+      ul.appendChild(li);
+      n++;
+      upd();
+    });
+    row.appendChild(btn);row.appendChild(cnt);
+    body.appendChild(row);
+    card.appendChild(body);
+    upd();
+    r.appendChild(card);
+  });
+})();
+</script>
+</body>
+</html>

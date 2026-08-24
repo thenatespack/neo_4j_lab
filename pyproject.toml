@@ -1,0 +1,15 @@
+[project]
+name = "neo-4j-lab"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "dotenv>=0.9.9",
+    "matplotlib>=3.11.1",
+    "neo4j>=6.2.0",
+    "networkx>=3.6.1",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.3"]

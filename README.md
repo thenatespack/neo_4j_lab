@@ -37,15 +37,13 @@ uv sync
 ### Step 4 — Complete the assignment
 
 - `main.py` — the assignment starter. Fill in each `TODO` to build the
-  transit graph and write the 5 required + 2 analysis Cypher queries from
-  `Docs.md`.
-- `main_template.py` — the completed reference solution, for comparison.
+  transit graph and write the 5 required + 2 analysis Cypher queries.
 
 ```bash
 uv run main.py
 ```
 
-Then write up `analysis.md` (see Docs.md's Final Deliverables section) and
+Then write up `analysis.txt` (see Assignment-Instructions.md's Final Deliverables section) and
 take a screenshot of your finished graph in Neo4j Browser, saved to
 `screenshots/graph.png`.
 
@@ -67,7 +65,6 @@ uv run runner.py all         # do all three (also the default with no mode)
 
 ```
 main.py            # assignment starter (TODOs)
-main_template.py   # assignment solution
 hints.html         # progressive hints for each TODO in main.py — open in a browser
 runner.py          # CLI for the extra tooling (seed / visualize / analyze / all)
 src/                # compiled .pyc only — no readable source, do not hand-edit

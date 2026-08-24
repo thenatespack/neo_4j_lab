@@ -3,7 +3,59 @@
 A Neo4j transit network project (see `Assingment-Instructions.md` for the assignment) plus some
 extra Python tooling for visualizing and analyzing the graph.
 
-### Step 1 — Install & run Neo4j
+### Step 0 — Check for Python 3.14
+
+This project requires **Python 3.14+** (the `.pyc` files in `src/` are tied
+to that version — see the note at the bottom of this file). Check what
+you've got:
+
+```bash
+python3 --version
+```
+
+If that's already 3.14 or newer, skip ahead to Step 1.
+
+The easiest cross-platform fix is to let `uv` (which you'll use in Step 4
+anyway) install it for you — this doesn't require installing uv system-wide
+first if you use `pipx` or the installer below:
+
+```bash
+uv python install 3.14
+```
+
+Otherwise, install Python 3.14 directly:
+
+**macOS** (via [Homebrew](https://brew.sh))
+```bash
+brew install python@3.14
+```
+
+**Windows**
+```powershell
+winget install Python.Python.3.14
+```
+or download the installer from [python.org/downloads](https://www.python.org/downloads/).
+
+**Linux (Debian/Ubuntu)**
+```bash
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.14
+```
+
+**Linux (Fedora)**
+```bash
+sudo dnf install python3.14
+```
+
+### Step 1 — Clone the repo
+
+```bash
+git clone https://github.com/thenatespack/neo_4j_lab.git
+cd neo_4j_lab
+```
+
+### Step 2 — Install & run Neo4j
 
 ```bash
 docker run \
@@ -17,7 +69,7 @@ This runs Neo4j **Community Edition**, which only supports the default
 `neo4j` database (no custom database names — `CREATE DATABASE` requires
 Enterprise).
 
-### Step 2 — Configure environment variables
+### Step 3 — Configure environment variables
 
 Create a `.env` file in the project root:
 
@@ -28,13 +80,13 @@ PAS=RcbeVionoDiXdCKzfpLZdmFk
 DB=neo4j
 ```
 
-### Step 3 — Install dependencies
+### Step 4 — Install dependencies
 
 ```bash
 uv sync
 ```
 
-### Step 4 — Complete the assignment
+### Step 5 — Complete the assignment
 
 - `main.py` — the assignment starter. Fill in each `TODO` to build the
   transit graph and write the 5 required + 2 analysis Cypher queries.
@@ -47,7 +99,7 @@ Then write up `analysis.txt` (see Assignment-Instructions.md's Final Deliverable
 take a screenshot of your finished graph in Neo4j Browser, saved to
 `screenshots/graph.png`.
 
-### Step 5 — Run the extra tooling
+### Step 6 — Run the extra tooling
 
 `runner.py` seeds a sample transit network, renders a graph screenshot, and
 runs route-finding/analysis tools (shortest route, transfer stations,
